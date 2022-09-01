@@ -19,7 +19,7 @@ const Home: NextPage = () => {
 				 ? <img
 					 src={session.user.image}
 					 alt={session.user.name || "discord user"}
-					 className="rounded-full w-32 h-32"/>
+					 className="rounded-full w-32 h-32 mb-2"/>
 				 : null
 				}
 
