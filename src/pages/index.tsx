@@ -14,7 +14,15 @@ const Home: NextPage = () => {
 			</Head>
 
 			<main className="container mx-auto flex flex-col items-center justify-center min-h-screen p-4">
-				<img src={session.user.image} alt={session.user.name} className="rounded-full w-32 h-32"/>
+				{session.user.image
+					// eslint-disable-next-line @next/next/no-img-element
+				 ? <img
+					 src={session.user.image}
+					 alt={session.user.name || "discord user"}
+					 className="rounded-full w-32 h-32"/>
+				 : null
+				}
+
 				Signed in as {session.user.name} <br/>
 				<button onClick={() => signOut()}>Sign out</button>
 			</main>
