@@ -50,6 +50,7 @@ model User {
   name          String?
   email         String?    @unique
   emailVerified DateTime?
+  verified      Boolean    @default(false)
   image         String?
   accounts      Account[]
   sessions      Session[]
