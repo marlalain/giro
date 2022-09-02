@@ -1,4 +1,5 @@
 import {Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr} from "@chakra-ui/react";
+import {Project} from "@prisma/client";
 import {trpc} from "../../utils/trpc";
 
 const ProjectTable = () => {
@@ -25,7 +26,7 @@ const ProjectTable = () => {
 				</Thead>
 
 				<Tbody>
-					{projects.data.map((project) => (
+					{projects.data.map((project: Project) => (
 						<Tr key={project.id}>
 							<Td>{project.title}</Td>
 							<Td>-</Td>
