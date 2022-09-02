@@ -13,23 +13,31 @@ export const protectedExampleRouter = createProtectedRouter()
 			return "He who asks a question is a fool for five minutes; he who does not ask a question remains a fool forever.";
 		},
 	})
-	.query("isVerified", {
-		input: z.string().cuid().nullish(),
-		async resolve({ctx, input}) {
-			if (!input) {
-				throw new Error("User not found");
-			}
-
-			const user = await ctx.prisma.user.findUnique({
-				where: {
-					id: input,
-				},
-			});
-
-			if (!user) {
-				throw new Error("User not found");
-			}
-
-			return user.verified;
+	.query("wasInvited", {
+		async resolve({ctx}) {
+			return await ctx.prisma.user.findUnique({
+				where: {id: ctx.session.user.id},
+			}).inviteToken();
 		}
 	})
+	.mutation("acceptInvite", {
+		input: z.string().min(10),
+		async resolve({ctx, input}) {
+			const inviteToken = await ctx.prisma.inviteToken.findUnique({
+				where: {id: input},
+			});
+
+			if (!inviteToken || inviteToken.userId) {
+				throw new Error("Invalid invite token");
+			}
+
+			await ctx.prisma.user.update({
+				where: {id: ctx.session.user.id},
+				data: {
+					inviteToken: {
+						connect: {id: input},
+					}
+				},
+			});
+		}
+	});

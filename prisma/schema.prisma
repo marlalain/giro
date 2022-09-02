@@ -46,11 +46,11 @@ model Session {
 }
 
 model User {
-  id            String     @id @default(cuid())
+  id            String       @id @default(cuid())
   name          String?
-  email         String?    @unique
+  email         String?      @unique
   emailVerified DateTime?
-  verified      Boolean    @default(false)
+  inviteToken   InviteToken?
   image         String?
   accounts      Account[]
   sessions      Session[]
@@ -65,6 +65,12 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model InviteToken {
+  id     String  @id @default(cuid())
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String? @unique
 }
 
 model Project {
