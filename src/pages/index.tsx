@@ -1,13 +1,21 @@
 import type {NextPage} from "next";
 import Head from "next/head";
 import {signIn, signOut, useSession} from "next-auth/react";
-import {Button, Text} from "@chakra-ui/react";
+import {Box, Button, Input, Text} from "@chakra-ui/react";
 import Link from "next/link";
 import {trpc} from "../utils/trpc";
+import {useState} from "react";
 
 const Home: NextPage = () => {
 	const {data: session} = useSession();
-	const isVerified = trpc.useQuery(["auth.isVerified", session?.user?.id]);
+	const [code, setCode] = useState("");
+	const wasInvited = trpc.useQuery(["auth.wasInvited"]);
+	const acceptInvite = trpc.useMutation("auth.acceptInvite");
+
+	const handleInvite = () => {
+		acceptInvite.mutateAsync(code)
+			.then(() => window.location.reload());
+	}
 
 	if (session && session.user) {
 		return <>
@@ -31,12 +39,23 @@ const Home: NextPage = () => {
 					signed in as {session.user.name} <br/>
 				</Text>
 
-				{!isVerified.isLoading && isVerified.data
-				 ? <Link href={'/projects'}>
-					 <Button my={5}>projects</Button>
-				 </Link>
-				 : null}
-
+				{
+					wasInvited.data?.userId === session.user.id
+					? <Link href={'/projects'}>
+						<Button my={5}>projects</Button>
+					</Link>
+					: (
+						<Box mb={5}>
+							<Input
+								placeholder="invite code"
+								value={code}
+								onChange={(e) => setCode(e.target.value)}
+								onKeyDown={(e) => {
+									if (e.key === "Enter") handleInvite();
+								}}/>
+						</Box>
+					)
+				}
 
 				<Button onClick={() => signOut()}>sign out</Button>
 			</main>
