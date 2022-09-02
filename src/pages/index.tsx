@@ -1,6 +1,8 @@
 import type {NextPage} from "next";
 import Head from "next/head";
 import {signIn, signOut, useSession} from "next-auth/react";
+import {Button, Text} from "@chakra-ui/react";
+import Link from "next/link";
 
 const Home: NextPage = () => {
 	const {data: session} = useSession();
@@ -23,15 +25,24 @@ const Home: NextPage = () => {
 				 : null
 				}
 
-				Signed in as {session.user.name} <br/>
-				<button onClick={() => signOut()}>Sign out</button>
+				<Text py={5}>
+					Signed in as {session.user.name} <br/>
+				</Text>
+
+				<Link href={'/projects'}>
+					<Button my={5}>Projects</Button>
+				</Link>
+
+				<Button onClick={() => signOut()}>Sign out</Button>
 			</main>
 		</>;
 	}
 
 	return <main className="container mx-auto flex flex-col items-center justify-center min-h-screen p-4">
-		Not signed in <br/>
-		<button onClick={() => signIn()}>Sign in</button>
+		<Text py={5}>
+			Not signed in <br/>
+		</Text>
+		<Button onClick={() => signIn()}>Sign in</Button>
 	</main>
 };
 
