@@ -1,43 +1,25 @@
 import {NextComponentType} from "next";
-import {Box, Button, Center, Flex, Input} from "@chakra-ui/react";
 import {trpc} from "../../utils/trpc";
 import {useReducer} from "react";
-import {formReducer, handleChange} from "../../utils/formUtils";
+import {formReducer} from "../../utils/formUtils";
 
-const DeadlineInput: NextComponentType = () => {
+const ProjectCreation: NextComponentType = () => {
 	const create = trpc.useMutation(['project.create']);
-	const table = trpc.useQuery(['project.getProjects'])
 	const [form, setForm] = useReducer(formReducer, {});
 
 	return (
-		<Center bg='blackAlpha.50' pb={10}>
-			<Flex mt={12} w='60%' h='20%'>
-				<Box flexGrow={1}>
-					<Input
-						name={'title'}
-						value={form.title || ''}
-						onChange={(e) => handleChange(e, setForm)}
-						autoFocus
-						bg='white'
-						size='lg'
-						placeholder='Type a project title...'/>
-				</Box>
+		<div className="flex flex-col items-center justify-center bg-gray-50 py-10">
+			<h2 className="text-lg mb-5">new project</h2>
 
-				<Box w={2}/>
-
-				<Box>
-					<Button
-						onClick={() =>
-							create.mutateAsync(form)
-								.then(() => setForm({reset: true}))
-								.then(() => table.refetch())}
-						height='100%'
-						variant='ghost'
-						colorScheme='gray'>Enter</Button>
-				</Box>
-			</Flex>
-		</Center>
+			<div className="flex flex-col items-center justify-center">
+				<input
+					className="border-2 border-gray-300 p-2 rounded-md focus:outline-none focus:border-purple-500 hover:border-purple-300"
+					placeholder="project name"
+					onChange={(e) => setForm({name: e.target.value})}
+				/>
+			</div>
+		</div>
 	)
 }
 
-export default DeadlineInput;
+export default ProjectCreation;
