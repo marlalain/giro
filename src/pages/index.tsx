@@ -1,9 +1,10 @@
 import type {NextPage} from "next";
-import Head from "next/head";
 import {signIn, signOut, useSession} from "next-auth/react";
 import {trpc} from "../utils/trpc";
 import {useState} from "react";
 import {useRouter} from "next/router";
+import CustomHead from "../components/custom-head";
+import Button from "../components/button";
 
 const Home: NextPage = () => {
 	const {data: session} = useSession();
@@ -19,11 +20,7 @@ const Home: NextPage = () => {
 
 	if (session && session.user) {
 		return <>
-			<Head>
-				<title>giro</title>
-				<meta name="description" content="giro is a productivity tool for neurodivergent people."/>
-				<link rel="icon" href="/favicon.ico"/>
-			</Head>
+			<CustomHead/>
 
 			<main className="container mx-auto flex flex-col items-center justify-center min-h-screen p-4">
 				{session.user.image
@@ -41,12 +38,11 @@ const Home: NextPage = () => {
 
 				{
 					wasInvited.data?.userId === session.user.id
-					? <button
-						className="py-5 rounded-md border px-4 py-1"
-						onClick={() => router.push("/projects")}>projects</button>
+					? <Button className="mb-3" onClick={() => router.push("/projects")}>projects</Button>
 					: (
 						<div placeholder="pb-5">
 							<input
+								className="border-2 border-gray-300 px-2 py-2 rounded-md focus:outline-none focus:border-blue-500 hover:border-blue-300"
 								placeholder="invite code"
 								value={code}
 								onChange={(e) => setCode(e.target.value)}
@@ -57,15 +53,21 @@ const Home: NextPage = () => {
 					)
 				}
 
-				<button className="mt-5 rounded-md border px-4 py-1" onClick={() => signOut()}>sign out</button>
+				<Button onClick={() => signOut()}>sign out</Button>
 			</main>
 		</>;
 	}
 
-	return <main className="container mx-auto flex flex-col items-center justify-center min-h-screen p-4">
-		<h2 className="text-lg mb-2">giro</h2>
-		<button className="rounded-md border px-4 py-1" onClick={() => signIn('discord')}>Sign in</button>
-	</main>
+	return <>
+		<CustomHead/>
+
+		<main className="container mx-auto flex flex-col items-center justify-center min-h-screen p-4">
+			<h2 className="text-lg mb-2">giro</h2>
+			<Button onClick={() => signIn('discord')}>
+				sign in
+			</Button>
+		</main>
+	</>;
 };
 
 export default Home;
