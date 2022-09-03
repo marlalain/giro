@@ -7,15 +7,31 @@ import type {AppType} from "next/dist/shared/lib/utils";
 import superjson from "superjson";
 import type {AppRouter} from "../server/router";
 import "../styles/globals.css";
+import {MoonIcon} from "@heroicons/react/24/outline";
 
 const MyApp: AppType = ({
-	                        Component,
-	                        pageProps: {session, ...pageProps},
+	                        Component, pageProps: {session, ...pageProps},
                         }) => {
+
+	const toggleDarkMode = () => {
+		const html = document.querySelector("html");
+		if (html) {
+			html.classList.toggle("dark");
+		}
+	}
+
 	return (
-		<SessionProvider session={session}>
-			<Component {...pageProps} />
-		</SessionProvider>
+		<>
+			<SessionProvider session={session}>
+				<Component {...pageProps} />
+			</SessionProvider>
+
+			<div className="fixed bottom-0 p-1 flex flex-col justify-center items-center w-full mb-2">
+				<button onClick={toggleDarkMode} className="border rounded-md p-1 hover:border-blue-500">
+					<MoonIcon className="h-6 w-6"/>
+				</button>
+			</div>
+		</>
 	);
 };
 
