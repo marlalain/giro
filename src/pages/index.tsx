@@ -1,16 +1,16 @@
 import type {NextPage} from "next";
 import Head from "next/head";
 import {signIn, signOut, useSession} from "next-auth/react";
-import {Box, Button, Input, Text} from "@chakra-ui/react";
-import Link from "next/link";
 import {trpc} from "../utils/trpc";
 import {useState} from "react";
+import {useRouter} from "next/router";
 
 const Home: NextPage = () => {
 	const {data: session} = useSession();
 	const [code, setCode] = useState("");
 	const wasInvited = trpc.useQuery(["auth.wasInvited"]);
 	const acceptInvite = trpc.useMutation("auth.acceptInvite");
+	const router = useRouter();
 
 	const handleInvite = () => {
 		acceptInvite.mutateAsync(code)
@@ -35,35 +35,36 @@ const Home: NextPage = () => {
 				 : null
 				}
 
-				<Text py={5}>
+				<p className="p-5">
 					signed in as {session.user.name} <br/>
-				</Text>
+				</p>
 
 				{
 					wasInvited.data?.userId === session.user.id
-					? <Link href={'/projects'}>
-						<Button my={5}>projects</Button>
-					</Link>
+					? <button
+						className="py-5 rounded-md border px-4 py-1"
+						onClick={() => router.push("/projects")}>projects</button>
 					: (
-						<Box mb={5}>
-							<Input
+						<div placeholder="pb-5">
+							<input
 								placeholder="invite code"
 								value={code}
 								onChange={(e) => setCode(e.target.value)}
 								onKeyDown={(e) => {
 									if (e.key === "Enter") handleInvite();
 								}}/>
-						</Box>
+						</div>
 					)
 				}
 
-				<Button onClick={() => signOut()}>sign out</Button>
+				<button className="mt-5 rounded-md border px-4 py-1" onClick={() => signOut()}>sign out</button>
 			</main>
 		</>;
 	}
 
 	return <main className="container mx-auto flex flex-col items-center justify-center min-h-screen p-4">
-		<Button variant={"outline"} onClick={() => signIn('discord')}>Sign in</Button>
+		<h2 className="text-lg mb-2">giro</h2>
+		<button className="rounded-md border px-4 py-1" onClick={() => signIn('discord')}>Sign in</button>
 	</main>
 };
 
