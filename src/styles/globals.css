@@ -5,5 +5,5 @@
 @tailwind utilities;
 
 html, body {
-    @apply bg-white text-gray-800 dark:bg-gray-800 dark:text-gray-100 selection:bg-blue-500 selection:text-white dark:selection:bg-blue-200 dark:selection:text-white
+    @apply bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-100
 }
