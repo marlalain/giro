@@ -38,7 +38,7 @@ const Home: NextPage = () => {
 
 				{
 					wasInvited.data?.userId === session.user.id
-					? <Button className="mb-3" onClick={() => router.push("/projects")}>projects</Button>
+					? <Button className="mb-3" onClick={() => router.push("/welcome")}>onboard now</Button>
 					: (
 						<div placeholder="pb-5">
 							<input
