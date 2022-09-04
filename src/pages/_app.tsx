@@ -26,9 +26,10 @@ const MyApp: AppType = ({
 				<Component {...pageProps} />
 			</SessionProvider>
 
-			<div className="fixed bottom-0 p-1 flex flex-col justify-center items-center w-full mb-2">
-				<button onClick={toggleDarkMode} className="border rounded-md p-1 hover:border-blue-500">
-					<MoonIcon className="h-6 w-6"/>
+			<div className="fixed top-0 right-0 p-1 flex flex-col items-end w-full mb-2">
+				<button onClick={toggleDarkMode}
+				        className="border rounded-md p-1 hover:border-blue-500 bg-white">
+					<MoonIcon className="h-6 w-6 text-gray-800 dark:text-gray-800"/>
 				</button>
 			</div>
 		</>
