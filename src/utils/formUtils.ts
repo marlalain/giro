@@ -2,15 +2,15 @@
 export const formReducer = (state: any, event: any) => {
 	if (event.reset) {
 		return {
-			title: ''
-		}
+			title: '',
+		};
 	}
 
 	return {
 		...state,
 		[event.name]: event.value,
-	}
-}
+	};
+};
 
 export const handleChange = (event: any, set: any) => {
 	set({

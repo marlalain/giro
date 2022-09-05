@@ -1,24 +1,24 @@
 // src/pages/_app.tsx
-import {httpBatchLink} from "@trpc/client/links/httpBatchLink";
-import {loggerLink} from "@trpc/client/links/loggerLink";
-import {withTRPC} from "@trpc/next";
-import {SessionProvider} from "next-auth/react";
-import type {AppType} from "next/dist/shared/lib/utils";
-import superjson from "superjson";
-import type {AppRouter} from "../server/router";
-import "../styles/globals.css";
-import {MoonIcon} from "@heroicons/react/24/outline";
+import { httpBatchLink } from '@trpc/client/links/httpBatchLink';
+import { loggerLink } from '@trpc/client/links/loggerLink';
+import { withTRPC } from '@trpc/next';
+import { SessionProvider } from 'next-auth/react';
+import type { AppType } from 'next/dist/shared/lib/utils';
+import superjson from 'superjson';
+import type { AppRouter } from '../server/router';
+import '../styles/globals.css';
+import { MoonIcon } from '@heroicons/react/24/outline';
 
 const MyApp: AppType = ({
-	                        Component, pageProps: {session, ...pageProps},
-                        }) => {
-
+	Component,
+	pageProps: { session, ...pageProps },
+}) => {
 	const toggleDarkMode = () => {
-		const html = document.querySelector("html");
+		const html = document.querySelector('html');
 		if (html) {
-			html.classList.toggle("dark");
+			html.classList.toggle('dark');
 		}
-	}
+	};
 
 	return (
 		<>
@@ -26,10 +26,12 @@ const MyApp: AppType = ({
 				<Component {...pageProps} />
 			</SessionProvider>
 
-			<div className="fixed top-0 right-0 p-1 flex flex-col items-end w-full mb-2">
-				<button onClick={toggleDarkMode}
-				        className="border rounded-md p-1 hover:border-blue-500 bg-white">
-					<MoonIcon className="h-6 w-6 text-gray-800 dark:text-gray-800"/>
+			<div className="fixed top-0 right-0 mb-2 flex w-full flex-col items-end p-1">
+				<button
+					onClick={toggleDarkMode}
+					className="rounded-md border bg-white p-1 hover:border-blue-500"
+				>
+					<MoonIcon className="h-6 w-6 text-gray-800 dark:text-gray-800" />
 				</button>
 			</div>
 		</>
@@ -37,7 +39,7 @@ const MyApp: AppType = ({
 };
 
 const getBaseUrl = () => {
-	if (typeof window !== "undefined") return ""; // browser should use relative url
+	if (typeof window !== 'undefined') return ''; // browser should use relative url
 	if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`; // SSR should use vercel url
 	return `http://localhost:${process.env.PORT ?? 3000}`; // dev SSR should use localhost
 };
@@ -54,10 +56,10 @@ export default withTRPC<AppRouter>({
 			links: [
 				loggerLink({
 					enabled: (opts) =>
-						process.env.NODE_ENV === "development" ||
-						(opts.direction === "down" && opts.result instanceof Error),
+						process.env.NODE_ENV === 'development' ||
+						(opts.direction === 'down' && opts.result instanceof Error),
 				}),
-				httpBatchLink({url}),
+				httpBatchLink({ url }),
 			],
 			url,
 			transformer: superjson,
