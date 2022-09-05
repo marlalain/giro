@@ -39,16 +39,16 @@ const SimpleCalendar = () => {
 
 				<button
 					onClick={() => setCurrentDate(currentDate.clone().subtract(1, 'month'))}
-					className="-my-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500 hover:bg-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500">
+					className="-my-1.5 flex flex-none items-center justify-center rounded-md p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2">
 					<span className="sr-only">Previous month</span>
-					<ChevronLeftIcon className="lg:h-6 lg:w-6 h-5 w-5" aria-hidden="true"/>
+					<ChevronLeftIcon className="h-5 w-5 lg:h-6 lg:w-6" aria-hidden="true"/>
 				</button>
 
 				<button
 					onClick={() => setCurrentDate(currentDate.clone().add(1, 'month'))}
-					className="-my-1 5 flex flex-none items-center justify-center p-1 5 text-gray-400 hover:text-gray-500 hover:bg-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500">
+					className="5 -my-1 flex flex-none items-center justify-center rounded-md p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2">
 					<span className="sr-only">Next month</span>
-					<ChevronRightIcon className="lg:h-6 lg:w-6 h-5 w-5" aria-hidden="true"/>
+					<ChevronRightIcon className="h-5 w-5 lg:h-6 lg:w-6" aria-hidden="true"/>
 				</button>
 			</div>
 
