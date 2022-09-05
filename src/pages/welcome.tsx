@@ -3,21 +3,7 @@ import CustomHead from "../components/custom-head";
 import {useReducer} from "react";
 import {formReducer} from "../utils/formUtils";
 import Button from "../components/button";
-
-const steps = [
-	{
-		name: "creating a project",
-		status: 'current',
-	},
-	{
-		name: "creating a deadline",
-		status: 'upcoming',
-	},
-	{
-		name: "creating tasks",
-		status: 'upcoming',
-	},
-];
+import SimpleCalendar from "../components/calendars/simple-calendar";
 
 type InputGroupProps = {
 	name: string;
@@ -38,11 +24,11 @@ const InputGroup = ({name, text, placeholder, onChange, textarea}: InputGroupPro
 			 id={name}
 			 name={name}
 			 rows={3}
-			 className="block w-full flex-1 rounded-md border border-gray-300 hover:border-purple-300 focus:border-purple-500"
+			 className="block w-full flex-1 rounded-md border border-gray-300 hover:border-pink-300 focus:border-pink-500"
 			 placeholder={placeholder || name}
 		 />
 		 : <input
-			 className="block w-full flex-1 rounded-md border border-gray-300 hover:border-purple-300 focus:border-purple-500"
+			 className="block w-full flex-1 rounded-md border border-gray-300 hover:border-pink-300 focus:border-pink-500"
 			 placeholder={placeholder || name}
 			 type="text"
 			 name={name}
@@ -58,9 +44,9 @@ type OnboardSectionProps = {
 }
 
 function OnboardSection({name, description, children}: OnboardSectionProps) {
-	return <div className="md:grid md:grid-cols-2 md:gap-6">
+	return <div className="md:grid md:grid-cols-4 md:gap-6">
 		<div className="md:col-span-1">
-			<div className="px-4 sm:px-0">
+			<div className="px-4 sm:px-0 mt-12 md:mt-0">
 				<h3 className="text-lg font-medium leading-6 text-gray-700">{name}</h3>
 				<p className="mt-1 text-md text-gray-600">
 					{description}
@@ -68,7 +54,9 @@ function OnboardSection({name, description, children}: OnboardSectionProps) {
 			</div>
 		</div>
 
-		<div className="mt-5 md:col-span-1 md:mt-0">
+		<div className="hidden lg:block lg:col-span-1"></div>
+
+		<div className="mt-5 md:col-span-3 lg:col-span-2 md:mt-0">
 			<div className="border shadow sm:overflow-hidden sm:rounded-md">
 				<div className="space-y-6 bg-white px-4 py-5 sm:p-6">
 					<div className="grid grid-cols-3 gap-6">
@@ -95,9 +83,8 @@ const Welcome: NextPage = () => {
 		<>
 			<CustomHead/>
 
-			<div className="w-6/12 my-10 mx-auto border rounded-md pt-8 bg-white">
+			<div className="sm:w-full md:w-10/12 lg:w-8/12 my-10 mx-auto border rounded-md pt-8 bg-white">
 				<div className="px-8 mb-6">
-
 					<h2 className="text-xl font-medium text-center leading-3 text-gray-600 mb-2">
 						welcome to giro!
 					</h2>
@@ -127,7 +114,40 @@ const Welcome: NextPage = () => {
 
 					<OnboardSection name="deadline"
 					                description="a deadline is a date that you want to achieve your tasks by">
-						<InputGroup name="title" onChange={(e: any) => setForm({deadlineTitle: e.target.value})}/>
+						<SimpleCalendar/>
+
+						<div className="col-span-3 flex justify-center items-center">
+							<div className="mt-1 flex rounded-md shadow-sm mx-10">
+								<label
+									htmlFor="deadlineHour"
+									className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
+									hour
+								</label>
+
+								<input
+									id="deadlineHour"
+									name="deadlineHour"
+									className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md focus:ring-pink-500 focus:border-pink-800 sm:text-sm border-gray-300"
+									placeholder="15"
+									type="number"/>
+							</div>
+
+							<div className="mt-1 flex rounded-md shadow-sm mr-10">
+								<label
+									htmlFor="deadlineMinute"
+									className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
+									minute
+								</label>
+
+								<input
+									id="deadlineMinute"
+									name="deadlineMinute"
+									className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md focus:ring-pink-500 focus:border-pink-800 sm:text-sm border-gray-300"
+									placeholder="00"
+									type="number"/>
+							</div>
+						</div>
+
 					</OnboardSection>
 
 					<Divider/>
@@ -148,7 +168,7 @@ const Welcome: NextPage = () => {
 
 					<Divider/>
 
-					<p className="text-md text-center text-gray-600">
+					<p className="text-md text-center text-gray-600 mt-12 md:mt-0">
 						one project can have many deadlines and a deadline can have many tasks
 					</p>
 
