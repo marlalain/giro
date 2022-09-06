@@ -35,10 +35,10 @@ const Welcome: NextPage = () => {
 					</h2>
 
 					<p className="text-center text-gray-600">
-						it's nice having you here. let's learn how to configure your
-						homepage first. <br />
-						and don't worry: you can create more projects, deadlines, and tasks
-						later
+						it&apos;s nice having you here. let&apos;s learn how to configure
+						your homepage first. <br />
+						and don&apos;t worry: you can create more projects, deadlines, and
+						tasks later
 					</p>
 
 					<Divider />
