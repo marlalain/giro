@@ -88,6 +88,46 @@ function Divider() {
 	);
 }
 
+function TimePicker() {
+	return (
+		<div className="col-span-3 flex items-center justify-center">
+			<div className="mx-10 mt-1 flex rounded-md shadow-sm">
+				<label
+					htmlFor="deadlineHour"
+					className="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-gray-500 sm:text-sm"
+				>
+					hour
+				</label>
+
+				<input
+					id="deadlineHour"
+					name="deadlineHour"
+					className="block w-full min-w-0 flex-1 rounded-none rounded-r-md border-gray-300 px-3 py-2 focus:border-pink-800 focus:ring-pink-500 sm:text-sm"
+					placeholder="15"
+					type="number"
+				/>
+			</div>
+
+			<div className="mt-1 mr-10 flex rounded-md shadow-sm">
+				<label
+					htmlFor="deadlineMinute"
+					className="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-gray-500 sm:text-sm"
+				>
+					minute
+				</label>
+
+				<input
+					id="deadlineMinute"
+					name="deadlineMinute"
+					className="block w-full min-w-0 flex-1 rounded-none rounded-r-md border-gray-300 px-3 py-2 focus:border-pink-800 focus:ring-pink-500 sm:text-sm"
+					placeholder="00"
+					type="number"
+				/>
+			</div>
+		</div>
+	);
+}
+
 const Welcome: NextPage = () => {
 	const [form, setForm] = useReducer(formReducer, {});
 
@@ -137,43 +177,15 @@ const Welcome: NextPage = () => {
 						name="deadline"
 						description="a deadline is a date that you want to achieve your tasks by"
 					>
+						<InputGroup
+							textarea
+							placeholder="a cool stream about japanese happens around this date"
+							text="description"
+							name="deadlineDescription"
+							onChange={() => ({})}
+						/>
 						<SimpleCalendar />
-
-						<div className="col-span-3 flex items-center justify-center">
-							<div className="mx-10 mt-1 flex rounded-md shadow-sm">
-								<label
-									htmlFor="deadlineHour"
-									className="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-gray-500 sm:text-sm"
-								>
-									hour
-								</label>
-
-								<input
-									id="deadlineHour"
-									name="deadlineHour"
-									className="block w-full min-w-0 flex-1 rounded-none rounded-r-md border-gray-300 px-3 py-2 focus:border-pink-800 focus:ring-pink-500 sm:text-sm"
-									placeholder="15"
-									type="number"
-								/>
-							</div>
-
-							<div className="mt-1 mr-10 flex rounded-md shadow-sm">
-								<label
-									htmlFor="deadlineMinute"
-									className="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-gray-500 sm:text-sm"
-								>
-									minute
-								</label>
-
-								<input
-									id="deadlineMinute"
-									name="deadlineMinute"
-									className="block w-full min-w-0 flex-1 rounded-none rounded-r-md border-gray-300 px-3 py-2 focus:border-pink-800 focus:ring-pink-500 sm:text-sm"
-									placeholder="00"
-									type="number"
-								/>
-							</div>
-						</div>
+						<TimePicker />
 					</OnboardSection>
 
 					<Divider />
@@ -198,7 +210,7 @@ const Welcome: NextPage = () => {
 
 					<Divider />
 
-					<p className="text-md mt-12 text-center text-gray-600 md:mt-0">
+					<p className="mt-12 text-center text-gray-600 md:mt-0">
 						one project can have many deadlines and a deadline can have many
 						tasks
 					</p>
