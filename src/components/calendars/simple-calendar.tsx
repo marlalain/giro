@@ -1,13 +1,22 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
 import { useState } from 'react';
 import moment from 'moment/moment';
+import { FieldValues, UseFormSetValue } from 'react-hook-form';
 
 const classNames = (...classes: any[]) => classes.filter(Boolean).join(' ');
 
-const SimpleCalendar = () => {
+type CalendarProps = {
+	setValue: UseFormSetValue<FieldValues>;
+};
+
+const SimpleCalendar = ({ setValue }: CalendarProps) => {
 	const today = moment();
-	const [selectedDay, setSelectedDay] = useState(today.clone());
 	const [currentDate, setCurrentDate] = useState(today.clone().startOf('day'));
+	const [selectedDay, setSelectedDay] = useState(today.clone());
+	const changeSelectedDay = (day: moment.Moment) => {
+		setSelectedDay(day);
+		setValue('deadlineDate', day.format('YYYY-MM-DD'));
+	};
 
 	const daysToRender = 35;
 	const firstDayOfWeek = currentDate.clone().startOf('month').startOf('week');
@@ -33,6 +42,7 @@ const SimpleCalendar = () => {
 				</h2>
 
 				<button
+					type="button"
 					onClick={() =>
 						setCurrentDate(currentDate.clone().subtract(1, 'month'))
 					}
@@ -46,6 +56,7 @@ const SimpleCalendar = () => {
 				</button>
 
 				<button
+					type="button"
 					onClick={() => setCurrentDate(currentDate.clone().add(1, 'month'))}
 					className="-my-1.5 flex flex-none items-center justify-center rounded-md p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
 				>
@@ -71,7 +82,8 @@ const SimpleCalendar = () => {
 				{days.map((day) => (
 					<div key={day.date} className="py-2">
 						<button
-							onClick={() => setSelectedDay(moment(day.date))}
+							type="button"
+							onClick={() => changeSelectedDay(moment(day.date))}
 							className={classNames(
 								day.isSelected && 'text-white',
 								!day.isSelected &&
