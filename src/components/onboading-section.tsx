@@ -12,7 +12,7 @@ function OnboardSection({ name, description, children }: OnboardSectionProps) {
 					<h3 className="text-lg font-medium leading-6 text-gray-700">
 						{name}
 					</h3>
-					<p className="text-md mt-1 text-gray-600">{description}</p>
+					<p className="mt-1 text-gray-600">{description}</p>
 				</div>
 			</div>
 
