@@ -93,7 +93,7 @@ const SimpleCalendar = ({ setValue }: CalendarProps) => {
 								!day.isSelected &&
 									!day.isToday &&
 									!day.isCurrentMonth &&
-									'text-gray-400',
+									'text-gray-400 hover:text-white',
 								day.isSelected && day.isToday && 'bg-pink-600',
 								day.isSelected && !day.isToday && 'bg-pink-600',
 								!day.isSelected && 'hover:bg-pink-200',
@@ -104,6 +104,7 @@ const SimpleCalendar = ({ setValue }: CalendarProps) => {
 							<time
 								className={classNames(
 									day.isToday &&
+										!day.isSelected &&
 										'border border-2 border-transparent border-b-pink-600 px-1',
 								)}
 								dateTime={day.date}
