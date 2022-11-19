@@ -6,6 +6,7 @@ import TimePicker from '../components/calendars/time-picker';
 import OnboardSection from '../components/onboading-section';
 import InputGroup from '../components/input-group';
 import { useForm } from 'react-hook-form';
+import { trpc } from '../utils/trpc';
 
 function Divider() {
 	return (
@@ -19,7 +20,38 @@ function Divider() {
 
 const Welcome: NextPage = () => {
 	const { register, handleSubmit, setValue } = useForm();
-	const onSubmit = (data: any) => console.log(data);
+	const welcomeForm = trpc.useMutation('onboard.welcome');
+
+	const deadlineTime = (hour: string, minute: string) =>
+		`${hour.padStart(2, '0')}:${minute.padStart(2, '0')}`;
+	const deadlineDate = (data: any) => {
+		const date = data.deadlineDate;
+		const time = deadlineTime(
+			String(data.deadlineHour),
+			String(data.deadlineMinute),
+		);
+
+		return new Date(`${date}T${time}`);
+	};
+
+	const onSubmit = (data: any) => {
+		console.log(data);
+
+		welcomeForm.mutate({
+			project: {
+				title: data.projectTitle,
+				description: data.projectDescription,
+			},
+			deadline: {
+				description: data.deadlineDescription,
+				date: deadlineDate(data),
+			},
+			task: {
+				title: data.taskTitle,
+				description: data.taskDescription,
+			},
+		});
+	};
 
 	return (
 		<>
