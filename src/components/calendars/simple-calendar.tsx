@@ -98,7 +98,7 @@ const SimpleCalendar = ({ setValue }: CalendarProps) => {
 								day.isSelected && !day.isToday && 'bg-pink-600',
 								!day.isSelected && 'hover:bg-pink-200',
 								(day.isSelected || day.isToday) && 'font-semibold',
-								'mx-auto flex h-8 w-8 items-center justify-center rounded-full',
+								'mx-auto flex h-8 w-8 items-center justify-center rounded-full focus:outline-none',
 							)}
 						>
 							<time
